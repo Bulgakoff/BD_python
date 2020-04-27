@@ -1,0 +1,21 @@
+--Р’РµР±РёРЅР°СЂ 1
+--Р‘С‹СЃС‚СЂС‹Р№ СЃС‚Р°СЂС‚
+(РєРѕРјР°РЅРґС‹ РІ С‚РµСЂРјРёРЅР°Р»Рµ Linux)
+
+--РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј MySQL
+
+wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.deb
+sudo apt-key adv --keyserver keys.gnupg.net --recv-keys 5072E1F5
+sudo  dpkg -i mysql-apt-config_0.8.10-1_all.deb
+sudo apt update
+sudo apt-get install mysql-server
+
+--РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј Workbench
+sudo apt-get install mysql-workbench-community
+
+--РџСЂРѕРІРµСЂСЏРµРј РІРµСЂСЃРёРё РєР»РёРµРЅС‚Р° Рё СЃРµСЂРІРµСЂР°
+mysql -V
+mysqld -V
+
+--РџСЂРѕРІРµСЂСЏРµРј СЂР°Р±РѕС‚Р°РµС‚ Р»Рё СЃРµСЂРІРµСЂ
+sudo systemctl status mysql
