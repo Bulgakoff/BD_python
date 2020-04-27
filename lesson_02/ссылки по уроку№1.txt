@@ -1,0 +1,37 @@
+/c/Program Files/MySQL/MySQL Server 8.0/bin
+cmd:
+c:\Program Files\MySQL\MySQL Server 8.0\bin
+
+
+ссылки на скачивание ПО
+• MySQL Community Server: https://dev.mysql.com/downloads/mysql/
+• Workbench: https://dev.mysql.com/downloads/workbench/
+• DbForge (есть бесплатная версия): https://www.devart.com/dbforge/mysql/studio/
+• DBeaver: https://dbeaver.io/download/
+
+Требования к курсовому проекту: https://docs.google.com/document/d/1v1I19wJ2hwlmuokjwzigklLEJKUHACUYp5ujzNGCH-g/
+Пример руководства по стилю SQL:
+https://www.sqlstyle.guide/ru/
+
+Дополнительные примеры учебных БД:
+• Employees: https://dev.mysql.com/doc/employee/en/
+• World: https://dev.mysql.com/doc/world-setup/en/
+• World_x: https://dev.mysql.com/doc/world-x-setup/en/
+• Sakila: https://dev.mysql.com/doc/sakila/en/
+
+Литература по СУБД:
+• Книга: «Введение в системы баз данных»
+Автор: Крис Дж. Дейт
+
+• Книга: «Изучаем SQL»
+Автор: Алан Бьюли
+
+• Книга: «SQL. Сборник рецептов»
+Автор: Энтони Молинаро
+
+Ответить
+Спасибо
+0
+
+Кирилл Иванов  •  Преподаватель  •  вчера в 21:15
+Ссылка на трансляцию: https://www.youtube.com/watch?v=jc1WAId4dDo&feature=youtu.be

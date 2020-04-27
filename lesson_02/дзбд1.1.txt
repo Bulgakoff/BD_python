@@ -1,0 +1,108 @@
+Практическое задание по теме “Управление БД”
+1.Установите СУБД MySQL. Создайте в домашней директории файл .my.cnf, задав в нем логин и пароль, который указывался при установке.
+
+root@hlbu-ubuntu:~# vim ~/.my.cnf
+[mysql]
+user=root
+password=...
+
+2.Создайте базу данных
+mysql> USE example
+Database changed
+
+mysql> CREATE DATABASE example;
+Query OK, 1 row affected (0,02 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| example            |
+| information_schema |
+| mydatabase         |
+| mysql              |
+| newbase            |
+| performance_schema |
+| sys                |
++--------------------+
+ example, разместите в ней таблицу users, состоящую из двух столбцов, числового id и строкового name.
+
+
+create table userss (
+id int not null auto_increment,
+txt varchar(100),
+primary key (id));
+
+mysql> insert into userss (txt) values('Petrov');
+Query OK, 1 row affected (0,02 sec)
+
+mysql> select * from userss;
++----+--------+
+| id | txt    |
++----+--------+
+|  1 | Petrov |
++----+--------+
+1 row in set (0,01 sec)
+
+mysql> insert into userss (txt) values('Ivanov');
+Query OK, 1 row affected (0,01 sec)
+
+mysql> insert into userss (txt) values('Pupkin');
+Query OK, 1 row affected (0,01 sec)
+
+mysql> select * from userss;
++----+--------+
+| id | txt    |
++----+--------+
+|  1 | Petrov |
+|  2 | Ivanov |
+|  3 | Pupkin |
++----+--------+
+3 rows in set (0,00 sec)
+
+mysql>
+
+3.Создайте дамп базы данных example из предыдущего задания,
+ 
+root@hlbu-ubuntu:~# mysqldump example > example.sql
+root@hlbu-ubuntu:~# cat example.sql
+-- MySQL dump 10.13  Distrib 8.0.19, for Linux (x86_64)
+--
+-- Host: localhost    Database: example
+-- ------------------------------------------------------
+-- Server version       8.0.19
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+..................
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2020-04-22  9:54:26
+
+
+
+разверните содержимое дампа в новую базу данных sample.
+(по желанию) Ознакомьтесь более подробно с документацией утилиты mysqldump. Создайте дамп единственной таблицы help_keyword базы данных mysql. Причем добейтесь того, чтобы дамп содержал только первые 100 строк таблицы.
+
+
+
+
+Напишите ответы на вопросы в комментарий при сдаче практического задания:
+1) Какие у вас ожидания от курса? Есть ли конкретные вопросы по теме Базы данных?
+вопросы в текущем режиме
+
+2) В какой сфере работаете сейчас?
+
+спорт
+
+
+3) Если в IT, то какой у вас опыт (инструменты, технологии, языки программирования)?
+
+немного java и html
