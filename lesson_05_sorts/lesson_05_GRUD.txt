@@ -1,0 +1,220 @@
+mysql> use shop
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from  catal;
++----+-------------+
+| id | name        |
++----+-------------+
+|  1 | proccessors |
+|  2 | mat.platy   |
+|  3 | video cards |
++----+-------------+
+3 rows in set (0,00 sec)
+
+mysql> update catal set id =id+10;
+Query OK, 3 rows affected (0,03 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from  catal;
++----+-------------+
+| id | name        |
++----+-------------+
+| 11 | proccessors |
+| 12 | mat.platy   |
+| 13 | video cards |
++----+-------------+
+3 rows in set (0,00 sec)
+
+NULL значит значениеи не определено, по тому 30+NULL == null
+
+mysql>  select 5+null;
++--------+
+| 5+null |
++--------+
+|   NULL |
++--------+
+1 row in set (0,00 sec)
+
+строка приводится в число:
+mysql>  select 5+ '5';
++--------+
+| 5+ '5' |
+
++--------+
+|     10 |
++--------+
+1 row in set (0,00 sec)
+
+ЕСЛИ НЕ ЧИСЛА В СТРОКЕ ТО ПРИВОДИТСЯ В 0
+mysql>  select 'эфвфыэ'+ 'sdfsdf';
++--------------------------+
+| 'эфвфыэ'+ 'sdfsdf'       |
++--------------------------+
+|                        0 |
++--------------------------+
+1 row in set, 2 warnings (0,00 sec)
+mysql>  select 'эфвфыэ'+ '5';
++---------------------+
+| 'эфвфыэ'+ '5'       |
++---------------------+
+|                   5 |
++---------------------+
+1 row in set, 1 warning (0,00 sec)
+ЦЕЛОЧИСЛЕННОЕ ДЕЛЕНИЕ 
+mysql> select 3/2, 3 div 2;
++--------+---------+
+| 3/2    | 3 div 2 |
++--------+---------+
+| 1.5000 |       1 |
++--------+---------+
+1 row in set (0,00 sec)
+
+ОСТАТОК ОТ ДЕЛЕНИЯ 
+mysql> select 3%2;
++------+
+| 3%2  |
++------+
+|    1 |
++------+
+1 row in set (0,00 sec)
+
+
+mysql> select 5-2*3;
++-------+
+| 5-2*3 |
++-------+
+|    -1 |
++-------+
+1 row in set (0,00 sec)
+АЛЬТЕРНАТИВНАЯ ФОРМА НАПИСАНИЯ %:
+mysql> select 3%2, 3 mod 2;
++------+---------+
+| 3%2  | 3 mod 2 |
++------+---------+
+|    1 |       1 |
++------+---------+
+1 row in set (0,00 sec)
+
+СРАВНЕНИЯ 
+
+mysql> select 5<3;
++-----+
+| 5<3 |
++-----+
+|   0 |
++-----+
+1 row in set (0,00 sec)
+
+mysql> select 5>3;
++-----+
+| 5>3 |
++-----+
+|   1 |
++-----+
+1 row in set (0,00 sec)
+mysql> select 5<3, 5=5;
++-----+-----+
+| 5<3 | 5=5 |
++-----+-----+
+|   0 |   1 | ЛОЖ, ИСТЬИННА
++-----+-----+
+mysql> select 5!=3, 5<>3;
+
+опреаторы не равно
++------+------+
+| 5!=3 | 5<>3 |
++------+------+
+|    1 |    1 |
++------+------+
+1 row in set (0,00 sec)
+
+ПРОВЕРКА НА ТО ЯВЛЯЕТСЯ ЛИ ЗНАЧЕНИЕ null
+mysql> select 5 is not null;
++---------------+
+| 5 is not null |
++---------------+
+|             1 |
++---------------+
+1 row in set (0,00 sec)
+mysql> select 5 is null;
++-----------+
+| 5 is null |
++-----------+
+|         0 |
++-----------+
+1 row in set (0,00 sec)
+
+mysql> select * from catal where name is not null;
++----+------------------------------------------+
+| id | name                                     |
++----+------------------------------------------+
+| 11 | proccessors                              |
+| 12 | mat.platy                                |
+| 13 | video cards                              |
+| 15 | Сетевое оборудование                     |
++----+------------------------------------------+
+4 rows in set (0,00 sec)
+
+mysql> insert catal values();
+Query OK, 1 row affected (0,01 sec)
+
+mysql> insert catal values(null, 'Сетевое оборудование ');
+Query OK, 1 row affected (0,01 sec)
+
+mysql> select * from catal;
++----+------------------------------------------+
+| id | name                                     |
++----+------------------------------------------+
+| 11 | proccessors                              |
+| 12 | mat.platy                                |
+| 13 | video cards                              |
+| 14 | NULL                                     |
+| 15 | Сетевое оборудование                     |
++----+------------------------------------------+
+5 rows in set (0,00 sec)
+
+mysql> select * from catal where name is not null;
++----+------------------------------------------+
+| id | name                                     |
++----+------------------------------------------+
+| 11 | proccessors                              |
+| 12 | mat.platy                                |
+| 13 | video cards                              |
+| 15 | Сетевое оборудование                     |
++----+------------------------------------------+
+4 rows in set (0,00 sec)
+
+mysql> select * from catal where name is null;
++----+------+
+| id | name |
++----+------+
+| 14 | NULL |
++----+------+
+1 row in set (0,00 sec)
+
+mysql>
+mysql> create table tbl1( y int, x int, qwe_sum int as (x+y));
+Query OK, 0 rows affected (0,13 sec)
+
+mysql> insert tbl1(y,x) values(6,2),(66,22),(3,1);
+Query OK, 3 rows affected (0,02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from tbl1;;
++------+------+---------+
+| y    | x    | qwe_sum |
++------+------+---------+
+|    6 |    2 |       8 |
+|   66 |   22 |      88 |
+|    3 |    1 |       4 |
++------+------+---------+
+3 rows in set (0,00 sec)
+
+
+
+
+
+
+
