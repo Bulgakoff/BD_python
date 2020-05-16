@@ -1,0 +1,273 @@
+-- lesson_07_hard_request
+-- ТИПЫ МНОГОТАБЛИЧНЫХ ЗАПРОcОВ
+
+
+USE shop;
+DROP table if not exists rubrics;
+CREATE TABLE rubrics (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) COMMENT 'название раздела'
+  ) COMMENT = 'Разделы интернет-магазина';
+
+INSERT INTO shop.rubrics
+VALUES
+(null,'видео карты'),
+(null,'память')
+;
+
+SELECT * FROM catal;
+id|name              
+--|------------------
+ 1|proccessors       
+ 2|mat.platy         
+ 3|video cards       
+ 4|жесткие диски     
+ 5|оперативная память
+ 
+SELECT * FROM rubrics;
+
+id|name       |
+--|-----------|
+ 1|видео карты|
+ 2|память     |
+
+
+SELECT * FROM catal
+union
+SELECT * FROM rubrics;
+id|name              |
+--|------------------|
+ 1|proccessors       |
+ 2|mat.platy         |
+ 3|video cards       |
+ 4|жесткие диски     |
+ 5|оперативная память|
+ 
+ 1|видео карты       |
+ 2|память            |
+
+INSERT INTO shop.rubrics
+VALUES
+(null,'жесткие диски');
+
+
+
+
+
+-- объединение UNION
+SELECT * FROM catal
+union all
+SELECT * FROM rubrics
+order by name DESC ;
+id|name              |
+--|------------------|
+ 2|память            |
+ 5|оперативная память|
+ 4|жесткие диски     |
+ 3|жесткие диски     |
+ 1|видео карты       |
+ 3|video cards       |
+ 1|proccessors       |
+ 2|mat.platy         |
+
+
+SELECT * FROM catal
+union all
+SELECT * FROM rubrics
+order by name DESC 
+limit 3;
+
+id|name              |
+--|------------------|
+ 2|память            |
+ 5|оперативная память|
+ 3|жесткие диски     |
+ 
+ 
+-- ВЛОЖЕННЫЕ ЗАПРОСЫ ()
+
+(SELECT * FROM catal order by name desc LIMIT 2)
+union all
+(SELECT * FROM rubrics order by name DESC limit 3);
+
+id|name              |
+--|------------------|
+ 5|оперативная память|
+ 4|жесткие диски     |
+ 2|память            |
+ 
+ 3|жесткие диски     |
+ 1|видео карты       |
+ 
+--  DROP table catal ;
+--  DROP table cat ;
+--  DROP table store_house_products ;
+--  DROP table store_house_products2 ;
+--  DROP table catal ;
+
+(SELECT *
+-- id, name
+FROM shop.catalogs)
+union
+(SELECT id, name
+-- id, name, description, price, catalog_id, created_at, updated_at
+FROM shop.products);
+
+id|name                   |
+--|-----------------------|
+ 1|Процессоры             |
+ 2|Материнские платы      |
+ 3|Видеокарты             |
+ 4|Жесткие диски          |
+ 5|Оперативная память     |
+ 1|Intel Core i3-8100     |
+ 2|Intel Core i5-7400     |
+ 3|AMD FX-8320E           |
+ 4|AMD FX-8320            |
+ 5|ASUS ROG MAXIMUS X HERO|
+ 6|Gigabyte H310M S2H     |
+ 7|MSI B250M GAMING PRO   |
+ 
+ (SELECT *
+-- id, name
+FROM shop.catalogs)
+union
+(SELECT id, name
+-- id, name, description, price, catalog_id, created_at, updated_at
+FROM shop.products)
+union 
+(SELECT id, name
+-- id, name, birthday_at, created_at, updated_at
+FROM shop.users order by name LIMIT 3);
+
+id|name                   |
+--|-----------------------|
+ 1|Процессоры             |
+ 2|Материнские платы      |
+ 3|Видеокарты             |
+ 4|Жесткие диски          |
+ 5|Оперативная память     |
+ 1|Intel Core i3-8100     |
+ 2|Intel Core i5-7400     |
+ 3|AMD FX-8320E           |
+ 4|AMD FX-8320            |
+ 5|ASUS ROG MAXIMUS X HERO|
+ 6|Gigabyte H310M S2H     |
+ 7|MSI B250M GAMING PRO   |
+ 3|Александр              |
+ 1|Геннадий               |
+ 5|Иван                   |
+ 
+--  ключевые слова IN, ANY,SOME,ALL
+ SELECT id, name FROM shop.catalogs;
+id|name              |
+--|------------------|
+ 1|Процессоры        |
+ 2|Материнские платы |
+ 3|Видеокарты        |
+ 4|Жесткие диски     |
+ 5|Оперативная память|
+
+ SELECT id, name, catalog_id FROM shop.products;
+id|name                   |catalog_id|
+--|-----------------------|----------|
+ 1|Intel Core i3-8100     |         1|
+ 2|Intel Core i5-7400     |         1|
+ 3|AMD FX-8320E           |         1|
+ 4|AMD FX-8320            |         1|
+ 5|ASUS ROG MAXIMUS X HERO|         2|
+ 6|Gigabyte H310M S2H     |         2|
+ 7|MSI B250M GAMING PRO   |         2|
+ 
+  SELECT id, name, catalog_id FROM shop.products WHERE catalog_id =1;
+ 
+id|name              |catalog_id|
+--|------------------|----------|
+ 1|Intel Core i3-8100|         1|
+ 2|Intel Core i5-7400|         1|
+ 3|AMD FX-8320E      |         1|
+ 4|AMD FX-8320       |         1|
+ 
+  SELECT id, name FROM shop.catalogs where name ='Процессоры';
+ 
+id|name      |
+--|----------|
+ 1|Процессоры|
+ 
+   SELECT id, name, catalog_id FROM shop.products 
+   where catalog_id = (SELECT id FROM shop.catalogs where name ='Процессоры')
+    id|name              |catalog_id|
+	--|------------------|----------|
+	 1|Intel Core i3-8100|         1|
+	 2|Intel Core i5-7400|         1|
+	 3|AMD FX-8320E      |         1|
+	 4|AMD FX-8320       |         1|
+   
+ SELECT MAX(price ) FROM shop.products ;
+ SELECT id, name,price, catalog_id
+FROM shop.products;
+
+SELECT id, name, price, catalog_id 
+FROM shop.products where price in (SELECT MAX(price) FROM products);
+id|name                   |price   |catalog_id|
+--|-----------------------|--------|----------|
+ 5|ASUS ROG MAXIMUS X HERO|19310.00|         2|
+ 
+ SELECT id, name, price, catalog_id 
+FROM shop.products where price < (SELECT AVG(price) FROM products);
+ 
+ id|name                |price  |catalog_id|
+--|--------------------|-------|----------|
+ 1|Intel Core i3-8100  |7890.00|         1|
+ 3|AMD FX-8320E        |4780.00|         1|
+ 4|AMD FX-8320         |7120.00|         1|
+ 6|Gigabyte H310M S2H  |4790.00|         2|
+ 7|MSI B250M GAMING PRO|5060.00|         2|
+ 
+ 
+SELECT id, name, price, catalog_id FROM shop.products;
+
+id|name                   |price   |catalog_id|
+--|-----------------------|--------|----------|
+ 1|Intel Core i3-8100     | 7890.00|         1|
+ 2|Intel Core i5-7400     |12700.00|         1|
+ 3|AMD FX-8320E           | 4780.00|         1|
+ 4|AMD FX-8320            | 7120.00|         1|
+ 5|ASUS ROG MAXIMUS X HERO|19310.00|         2|
+ 6|Gigabyte H310M S2H     | 4790.00|         2|
+ 7|MSI B250M GAMING PRO   | 5060.00|         2|
+ 
+ SELECT name FROM shop.catalogs where id =1 ;
+ SELECT id, name,
+ (SELECT name
+--  id, name
+ FROM shop.catalogs where id=catalog_id)
+FROM products ;
+id|name                   |(SELECT name
+--  id, name
+ FROM shop.catalogs where id=catalog_id)|
+--|-----------------------|------------------
+ 1|Intel Core i3-8100     |Процессоры        
+ 2|Intel Core i5-7400     |Процессоры        
+ 3|AMD FX-8320E           |Процессоры        
+ 4|AMD FX-8320            |Процессоры        
+ 5|ASUS ROG MAXIMUS X HERO|Материнские платы 
+ 6|Gigabyte H310M S2H     |Материнские платы 
+ 7|MSI B250M GAMING PRO   |Материнские платы 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+--  ПРОВЕРКА НА СУЩЕСТВОВАНИЕ 
+ 
+ 
+--  КОРЕЛИРОВАННЫЕ ЗАПРОСЫ
+ 
+ 
+ 
+--  ПОДЗАПРОСЫ В КОНСТРУКЦИИ FROM
+-- соединение JOIN
